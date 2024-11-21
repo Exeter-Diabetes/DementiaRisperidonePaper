@@ -111,7 +111,7 @@ variables = c("patid","consid","censoringDate", "cause_of_death_stroke_type", "d
 # Create an empty list to store matched data frames
 matched_data_list <- list()
 cumulative_matched_data <- data.frame()
-sink("C:/Users/njc232/OneDrive - University of Exeter/Documents/MatchedData_exact_final_paperDraft/summary_output.txt", append = TRUE)
+sink("/slade/********/MatchedData/summary_output.txt", append = TRUE)
 
 
 
@@ -816,9 +816,9 @@ for (year in 2004:2023) {
   summary_data <- summary(m.out2, un = FALSE)
   
   match.t <- get_matches(m.out2)
-  write.table(match.t, file = paste0("C:/Users/njc232/OneDrive - University of Exeter/Documents/MatchedData_exact_final_paperDraft/match_t_", year, ".txt"), sep = "\t", row.names = FALSE)
+  write.table(match.t, file = paste0("/slade/********/MatchedData/match_t_", year, ".txt"), sep = "\t", row.names = FALSE)
   # Save matched data to the list
-  file_name <- paste0("C:/Users/njc232/OneDrive - University of Exeter/Documents/MatchedData_exact_final_paperDraft/matched_data_iteration_", year, ".txt")
+  file_name <- paste0("/slade/********/MatchedData/matched_data_iteration_", year, ".txt")
   
   # Write matched data to the file
   write.table(match.data(m.out2), file_name, sep = "\t", row.names = FALSE)
@@ -837,7 +837,7 @@ sink()
 all_matched_data <- dplyr::bind_rows(matched_data_list, .id = "Year")
 
 # Save the combined matched data to a txt file
-write.table(all_matched_data, "C:/Users/njc232/OneDrive - University of Exeter/Documents/MatchedData_exact_final_paperDraft/Joshua_all_matched_data_paperDraft.txt", sep = "\t", row.names = FALSE)
+write.table(all_matched_data, "/slade/********/MatchedData/Joshua_all_matched_data.txt", sep = "\t", row.names = FALSE)
 
 
 cumulative_matched_data <- cumulative_matched_data %>%
@@ -856,7 +856,7 @@ cumulative_matched_data <- cumulative_matched_data %>%
       !is.na(date_dbp) & !is.na(date_sbp) & date_dbp != date_sbp ~ pmin(date_dbp, date_sbp, na.rm = TRUE),
       TRUE ~ NA_Date_
     ))
-write.table(cumulative_matched_data, file = "C:/Users/njc232/OneDrive - University of Exeter/Documents/MatchedData_exact_final_paperDraft/Joshua_cumulative_matched_data_paperDraft.txt",sep = "\t", row.names = FALSE)
+write.table(cumulative_matched_data, file = "/slade/********/MatchedData/Joshua_finalMatchedData.txt",sep = "\t", row.names = FALSE)
 
 
 
