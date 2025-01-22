@@ -1,4 +1,4 @@
-# This file contains all the codes used in the study, from cohort preparation all the way to analysis
+# This file contains all the codes used in the study, from cohort preparation to analysis
 ## Data Preparation
 
 1. ### CohortDataPreparationScript.R
@@ -6,8 +6,8 @@
    This script interacts with the data on the server using the Aurum package. We used the script to create both the dementia and risperidone cohorts. 
 - #### Final dementia incident cohort
    * This script reads information from the observation table using the dementia codelist and links patient and practice information, creating a table called **all_raw_dementia_patients**.
-   * The next step is dropping all patients who have bipolar disorder and schizophrenia, caching the table as **all_clean_Obs_withoutSchizo_Bipolar_final**.
-   * Mark the deregistration date as 30-11-2023 for records where it is null, and create a "died" binary variable to mark those with `cprd_ddate` as dead. Keep all patients diagnosed after their date of birth and before the date of deregistration, last date of collection, and `cprd_ddate`. Cache this in **all_clean_dementia_observations_final**.
+   * The next step is dropping all patients with bipolar disorder and schizophrenia, cache the table as **all_clean_Obs_withoutSchizo_Bipolar_final**.
+   * Mark the deregistration date as 30-11-2023 for records where it is null, and create a binary variable "died" to mark those with `cprd_ddate` as dead. Keep all patients diagnosed after their date of birth and before the deregistration date, last date of collection, and `cprd_ddate`. Cache this in **all_clean_dementia_observations_final**.
    * Create a variable marking the earliest date of diagnosis and a binary variable for diagnosis before registration. Use the earliest date of diagnosis to filter out patients diagnosed before 1980-01-01 (to remove old codes). The resulting table, **all_dementia_observation_after_2004**, contains patients with a dementia code after 2004-01-01 (the study period).
    * Select patients who were active after 2004-01-01; the deregistration date and `cprd_ddate` (if not null) must be after 2004-01-01.
    * Select only patients diagnosed at age 65 and above, and cache the table as **final_dementia_after2004**. This table is linked to the following tables:
