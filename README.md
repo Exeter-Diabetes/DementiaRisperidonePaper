@@ -8,9 +8,9 @@
    * This script reads information from the observation table using the dementia codelist and links patient and practice information, creating a table called **all_raw_dementia_patients**.
    * The next step is dropping all patients with bipolar disorder and schizophrenia, cache the table as **all_clean_Obs_withoutSchizo_Bipolar_final**.
    * Mark the deregistration date as 30-11-2023 for records where it is null, and create a binary variable "died" to mark those with `cprd_ddate` as dead. Keep all patients diagnosed after their date of birth and before the deregistration date, last date of collection, and `cprd_ddate`. Cache this in **all_clean_dementia_observations_final**.
-   * Create a variable marking the earliest date of diagnosis and a binary variable for diagnosis before registration. Use the earliest date of diagnosis to filter out patients diagnosed before 1980-01-01 (to remove old codes). The resulting table, **all_dementia_observation_after_2004**, contains patients with a dementia code after 2004-01-01 (the study period).
+   * Create a variable to identify the earliest date of diagnosis and a binary variable for the diagnosis before registration. Use the earliest date of diagnosis to filter out patients diagnosed before 1980-01-01 (to remove old codes). The resulting table, **all_dementia_observation_after_2004**, contains patients with a dementia code after 2004-01-01 (the study period).
    * Select patients who were active after 2004-01-01; the deregistration date and `cprd_ddate` (if not null) must be after 2004-01-01.
-   * Select only patients diagnosed at age 65 and above, and cache the table as **final_dementia_after2004**. This table is linked to the following tables:
+   * Select only patients who were diagnosed at the age of 65 and above, and cache the table as **final_dementia_after2004**. This table is linked to the following tables:
       - [Alcohol level at diagnosis](https://github.com/Exeter-Diabetes/DementiaRisperidonePaper/blob/main/Data-preparation/At_diag_alcohol.R)
         - Implemented [diabetes alcohol algorithm](https://github.com/Exeter-Diabetes/CPRD-Codelists?tab=readme-ov-file#alcohol-consumption)
       - [Smoking status at diagnosis](https://github.com/Exeter-Diabetes/Dementia/blob/main/Cohort-and-Analysis-scripts/DataPreparation/At_diag_smoking.R)
@@ -21,7 +21,7 @@
       - Stroke (**clean_stroke_medcodes** and **clean_stroke_icd10**)
       - ONS death (**onsDeath**)
       - Stroke as primary cause of death (**death_stroke_primary**)
-   * The final dementia cohort, containing patients with HES-linked data, was then created and linked with the deprivation table. The final table is named **final_dementia_cohortLinkedData**.                
+   * The final dementia cohort, containing patients with HES-linked data, was then created and linked to the deprivation table. The final table is named **final_dementia_cohortLinkedData**.                
 
          ```
              [1] "patid"                        "consid"                       "pracid"                       "obsid"                       
@@ -44,8 +44,8 @@
             [69] "DiagnosedAfterCompositeDeath" "deprivation"                 
          ```
 - #### Final risperidone cohort
-   * This part of the code starts by reading in the prescription data (**clean_risperidone_prescriptions**) and select the earliest data of prescription which is then joined to the final dementia cohort to select patients with risperidone prescription and keeping those prescribed after 2004-01-01 (**final_risperidone_After2004**). We then identity patients who were prescribed: after diagnosis, within a year prior to diagnosis and more than a year before diagnosis
-   * The final cohort if defined from **final_risperidone_afterdiagnosis_cohort_2004** by selecting only patients with a linked data and the cohort is cached as **final_risperidone_cohortLinkedData**
+   * This part of the code begins by reading in the prescription data (**clean_risperidone_prescriptions**) and selecting the earliest prescription date which is then joined to the final dementia cohort to select patients with risperidone prescriptions and retain those prescribed after 2004-01-01 (**final_risperidone_After2004**). Subsequently, the patients who were prescribed risperidone are identified: after diagnosis, within one year before diagnosis and more than one year before diagnosis
+   * The final cohort if defined from **final_risperidone_afterdiagnosis_cohort_2004** by selecting only patients with linked data and the cohort is cached as **final_risperidone_cohortLinkedData**
     
          ```
 
@@ -91,7 +91,7 @@
    * Risperidone prescriptions (**risperidone_prescriptions**)
    * Other antipsychotic prescriptions (**Other_Antipsychotic_Prescriptions**)
    * Final risperidone cohort (**final_risperidone_cohortLinkedData**)
-- Since the matching is done by calender year. We have partitioned the script to loop through the years, starting from 2004 upto 2023.
+- Since the matching is done by calender year. We have partitioned the script so that it loop through the years starting with 2004 to 2023.
   - #### Treatment Group:
      - Select patients prescribed risperidone in the current calendar year
      - Remove anyone who was prescribed any other antipsychotic other than prochlorperazine three months prior to risperidone prescription
