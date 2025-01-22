@@ -91,11 +91,11 @@
    * Risperidone prescriptions (**risperidone_prescriptions**)
    * Other antipsychotic prescriptions (**Other_Antipsychotic_Prescriptions**)
    * Final risperidone cohort (**final_risperidone_cohortLinkedData**)
-- Since the matching is done by calender year. We have partitioned the script so that it loop through the years starting with 2004 to 2023.
+- Since the matching is done by calender year. We have partitioned the script so that it loops through the years starting with 2004 to 2023.
   - #### Treatment Group:
-     - Select patients prescribed risperidone in the current calendar year
-     - Remove anyone who was prescribed any other antipsychotic other than prochlorperazine three months prior to risperidone prescription
-     - Censor any patient in the treatment group that gets prescribed other antipsychotic within a year of follow up after risperidone prescription
+     - Select patients who were prescribed risperidone in the current calendar year
+     - Remove all patients who were prescribed an antipsychotic other than prochlorperazine three months prior to being prescribed risperidone
+     - Censor any patient in the treatment group that who is prescribed another antipsychotic within a year of follow up after risperidone prescription
        
   - #### Control Group:
      - Select patients who were first diagnosed (earliest date of diagnosis) and registered before the begining of the current calendar year
@@ -162,12 +162,12 @@
 
 1. ### Analysis.R
 
-   This script performs the analysis for both one year (top part of the script) and 12 weeks (bottom part of the script) follow-up. The details of how it works are outlined below
-   - In this script we analyse the matched data. 
-   - Censoring date is defined as the minimum of the following: inferred last date of prescription, deregistration date, death, last day of collection and one year follow up
+   This script performs the analysis both for one year (upper part of the script) and for 12 weeks (lower part of the script) follow-up. The details of how it works are outlined below
+   - In this script, the matched data is analysed. 
+   - The censoring date is defined as the minimum of the following dates: inferred last date of prescription, deregistration date, death, last day of collection and one year follow up
    - Defined all the subgroups
    - Plot a Kaplan-meier survival plot for each subgroup and showing the absolute risk difference between the matched control and treatment group at 12 weeks and one year follow up period
-   - Fit a Cox model, both adjusted and undjusted
+   - Fitting a Cox model, both adjusted and undjusted
    - Computed metrics:
      - Hazard ratio 
      - Absolute risk difference
