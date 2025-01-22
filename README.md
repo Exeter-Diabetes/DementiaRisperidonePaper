@@ -91,11 +91,11 @@
    * Risperidone prescriptions (**risperidone_prescriptions**)
    * Other antipsychotic prescriptions (**Other_Antipsychotic_Prescriptions**)
    * Final risperidone cohort (**final_risperidone_cohortLinkedData**)
-- Since the matching is done by calender year. We have partitioned the script so that it loops through the years starting with 2004 to 2023.
+- Since the matching is done by calender year. We have partitioned the script to loop through the years, starting from 2004 upto 2023.
   - #### Treatment Group:
-     - Select patients who were prescribed risperidone in the current calendar year
-     - Remove all patients who were prescribed an antipsychotic other than prochlorperazine three months prior to being prescribed risperidone
-     - Censor any patient in the treatment group that who is prescribed another antipsychotic within a year of follow up after risperidone prescription
+     - Select patients prescribed risperidone in the current calendar year
+     - Remove anyone who was prescribed any other antipsychotic other than prochlorperazine three months prior to risperidone prescription
+     - Censor any patient in the treatment group that gets prescribed other antipsychotic within a year of follow up after risperidone prescription
        
   - #### Control Group:
      - Select patients who were first diagnosed (earliest date of diagnosis) and registered before the begining of the current calendar year
